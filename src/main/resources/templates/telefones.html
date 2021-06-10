@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Pessoas</title>
+ <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<style type="text/css">
+table.striped>tbody>tr:nth-child(odd){
+	background-color: rgba(158,154,154,0.5);
+}
+form input[type=submit]{
+	color: white;
+}
+</style>      
+<script type="text/javascript" >
+function limpar(){
+	 document.getElementById('id').value=null
+	 document.getElementById('nome').value=""
+	 document.getElementById('sobrenome').value=""
+	 document.getElementById('idade').value=parseInt(0)
+}
+
+</script>
+</head>
+<body>
+	<h3>Spring Boot + Thymeleaf + Material Design Lite</h3><br/>
+	<h5>Cadastro de Pessoas</h5>
+	 
+	<!-- aqui começa as modificções de telefones --> 
+	<a class="waves-effect waves-light btn" href="/cadastropessoa">
+		Cad. Pessoa
+	</a>
+	<div th:each="p : ${pessoa}">
+		<div class="row">
+			<p>ID: <span th:text="${p.id}"></span></p>
+			<p>Nome: <span th:text="${p.nome}"></span></p>
+			<p>Sobrenome: <span th:text="${p.sobrenome}"></span></p>
+			<p>Idade: <span th:text="${p.idade}"></span></p>
+		</div>
+	
+	</div>
+	<h5>Telefones</h5>
+	<div class="row">
+		<br/>
+		<div th:each = "m : ${msg}"> 
+			<span th:text="${m}"></span>
+		</div>
+		<br/>
+	</div>	
+	
+	<div class="row">
+		<!-- th:action do thymeleaf e depois construir link através do @ -->
+		<form th:action="@{/pessoa/addfonePessoa/{pessoaid}(pessoaid=${pessoa.id})}" 
+		 method="post" class="col s12" onsubmit="return validarCampos()? true : false">
+			<div class="row">
+				<div class="input-fiel col s6">
+					<label for="numero" class="active">Número</label>
+					<input name="numero" id="numero" class="validate">
+				</div>
+				
+				<div class="input-fiel col s6">
+					<label for="tipo" class="active">Tipo</label>
+					<input name="tipo" id="tipo" class="validate">
+				</div>
+			 
+							
+			<input class="waves-effect waves-light btn" type="submit"
+					value="Adicionar" >
+					
+				
+			</div>
+		</form>
+</div>
+
+</body>
+</html>
